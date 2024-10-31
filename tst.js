@@ -1,8 +1,8 @@
 const recipes = {
     'chicken': {
-        name: 'Marinated Chi-Ken',
-        name2: 'Fry Batter Chi-Ken',
-        ingredient: 'Ingredient Chi-Ken',
+        name: 'Marinated Chi-Kin',
+        name2: 'Fry Batter Chi-Kin',
+        ingredient: 'Ingredient Chi-Kin',
         salt: 0.65,
         onion: 0.11,
         garlic: 0.11,
@@ -123,4 +123,4 @@ document.getElementById('recipe-type').addEventListener('change', function() {
 // Initialize with default recipe
 window.addEventListener('load', function() {
     updatePercentages('chicken');
-});
+});F
