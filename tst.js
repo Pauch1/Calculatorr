@@ -2,7 +2,7 @@ const recipes = {
     'chicken': {
         name: 'Marinated Chi-Ken',
         name2: 'Fry Batter Chi-Ken',
-        ingredient: 'Ingredient',
+        ingredient: 'Ingredient Chi-Ken',
         salt: 0.65,
         onion: 0.11,
         garlic: 0.11,
@@ -31,8 +31,8 @@ function updatePercentages(recipeType) {
     // Update recipe title
     document.getElementById('recipe-title').textContent = recipe.name;
     document.getElementById('title').textContent = recipe.name2;
-    document.getElementById('ingredient').textContent = recipe.ingredient;
-    document.getElementById('ingredients').textContent = recipe.ingredient;
+    document.getElementById('ingr').textContent = recipe.ingredient;
+    document.getElementById('ingrs').textContent = recipe.ingredient;
     
     // Update percentages with fixed decimal places
     document.getElementById('salt-percentage').textContent = formatPercentage(recipe.salt);
@@ -43,6 +43,9 @@ function updatePercentages(recipeType) {
 }
 
 function calculateAll() {
+
+    
+    
     const chicken_gram = parseFloat(document.getElementById('chicken-gram').value) || 0;
     const recipeType = document.getElementById('recipe-type').value;
     const recipe = recipes[recipeType];
@@ -77,7 +80,7 @@ function calculateAll() {
     const batter_total = water2 + fry_batter_val;
     
     // Update marinade values
-    updateValue('p-mar-chx', p_mar_chx);
+    
     updateValue('salt', salt);
     updateValue('onion-powder', onion_powder);
     updateValue('garlic-powder', garlic_powder);
