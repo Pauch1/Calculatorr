@@ -3,11 +3,11 @@ const recipes = {
         name: 'Marinated Chi-Kin',
         name2: 'Fry Batter Chi-Kin',
         ingredient: 'Ingredient Chi-Kin',
-        salt: 0.65,
+        salt: 0.62,
         onion: 0.11,
         garlic: 0.11,
-        pepper: 0.065,
-        ginger: 0.065
+        pepper: 0.07,
+        ginger: 0.09
     },
     'chicken-chop': {
         name: 'Marinated Chop',
