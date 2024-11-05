@@ -95,12 +95,12 @@ const recipes = {
             },
             ratios: {
                 "Soy Sauce": 0.0219 * 1.2,
-                "Mirin": 0.0199,
-                "Sugar": 0.0152,
-                "Corn Syrup": 0.0252,
-                "Garlic": 0.0086,
-                "Vinegar": 0.0033,
-                "Oyster Sauce": 0.0060
+                "Mirin": 0.0199 * 1.2,
+                "Sugar": 0.0152 * 1.2,
+                "Corn Syrup": 0.0252 * 1.2,
+                "Garlic": 0.0086 * 1.2,
+                "Vinegar": 0.0033 * 1.2,
+                "Oyster Sauce": 0.0060 * 1.2
             }
         }
     },
