@@ -3,141 +3,56 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Marinade Calculator</title>
-    <link rel="stylesheet" href="tst.css">
+    <title>Chi-kin Recipe Calculator</title>
+    <link rel="stylesheet" href="r.css">
 </head>
 <body>
     <div class="container">
-        <h1>Chi-Kin Calculator</h1>
+        <h1>Chicken Recipe Calculator</h1>
         
+        <div class="recipe-selector">
+            <h2>Select Recipe</h2>
+            <select id="recipeSelect">
+                <option value="marinated">Marinated Chi-kin</option>
+                <option value="chop">Marinated Chi-kin Chop</option>
+                <option value="soy">Soy Garlic</option>
+                <option value="spicy">Spicy Gochujang Sauce</option>
+            </select>
+        </div>
+
         <div class="input-section">
-            <div class="recipe-selector">
-                <label for="recipe-type">Select Recipe:</label>
-                <select id="recipe-type">
-                    <option value="chicken">Marinated Chi-Kin</option>
-                    <option value="chicken-chop">Marinated Chi-Kin Chop</option>
-                </select>
+            <label for="chickenWeight">Chi-kin Weight (grams):</label>
+            <input type="number" id="chickenWeight" min="1" placeholder="Enter weight in grams">
+            <div class="toggle-container">
+                <label class="toggle">
+                    <input type="checkbox" id="showPercentages">
+                    <span class="slider"></span>
+                    Show Percentages
+                </label>
             </div>
-            <div class="weight-input">
-                <label for="chicken-gram">Enter Chi-Kin Weight (grams):</label>
-                <input type="number" id="chicken-gram" min="0" step="1">
-            </div>
-            <button onclick="calculateAll()">Calculate</button>
+            <button id="calculateBtn">Calculate</button>
         </div>
 
-        <div class="results-container">
-            <div class="result-section">
-                <h2 id="recipe-title">Marinated Chi-kin</h2>
-                <p class="est">P-MAR CHX: 1.70%</p>
-                
-                <div class="calculation-table">
-                    <div class="row header">
-                        <span>Percentage</span>
-                        <span id="ingr">Ingredient</span>
-                        <span>Amount (g)</span>
-                    </div>
-                    
-                    <div class="row">
-                        <span id="salt-percentage">58%</span>
-                        <span>Salt</span>
-                        <span id="salt">0.00</span>
-                    </div>
-                    <div class="row">
-                        <span id="onion-percentage">12%</span>
-                        <span>Onion Powder</span>
-                        <span id="onion-powder">0.00</span>
-                    </div>
-                    <div class="row">
-                        <span id="garlic-percentage">12%</span>
-                        <span>Garlic Powder</span>
-                        <span id="garlic-powder">0.00</span>
-                    </div>
-                    <div class="row">
-                        <span id="pepper-percentage">8%</span>
-                        <span>Black Pepper</span>
-                        <span id="black-pepper">0.00</span>
-                    </div>
-                    <div class="row">
-                        <span id="ginger-percentage">10%</span>
-                        <span>Ginger Powder</span>
-                        <span id="ginger-powder">0.00</span>
-                    </div>
-                    <div class="row total">
-                        <span>100%</span>
-                        <span>Total</span>
-                        <span id="marinade-total">0.00</span>
-                    </div>
-                    <div class="row">
-                        <span>1.50%</span>
-                        <span>Water</span>
-                        <span id="water1">0.00</span>
-                    </div>
-                    <div class="row grand-total">
-                        <span></span>
-                        <span>Grand Total</span>
-                        <span id="marinade-grand-total">0.00</span>
-                    </div>
-                </div>
+        <div class="results" id="results">
+            <div class="result-card marinade-section" id="marinade">
+                <h2 id="marinadeTitle">Marinade</h2>
+                <h4>P-MAR CHX: 1.70%</h4>
+                <div class="ingredients"></div>
             </div>
-
-            <div class="result-section">
-                <h2 id="title">Fry Batter Procedure</h2>
-                <p class="est">EST: 14%</p>
-                <div class="calculation-table">
-                    <div class="row header">
-                        <span>Percentage</span>
-                        <span id="ingrs">Ingredient</span>
-                        <span>Amount (g)</span>
-                    </div>
-                    <div class="row">
-                        <span>45%</span>
-                        <span>Fry Batter</span>
-                        <span id="fry-batter">0.00</span>
-                    </div>
-                    <div class="row">
-                        <span>28%</span>
-                        <span>All Purpose Flour</span>
-                        <span id="flour">0.00</span>
-                    </div>
-                    <div class="row">
-                        <span>46.20%</span>
-                        <span>Potato Starch</span>
-                        <span id="potato-starch">0.00</span>
-                    </div>
-                    <div class="row">
-                        <span>1.80%</span>
-                        <span>Baking Powder</span>
-                        <span id="baking-powder">0.00</span>
-                    </div>
-                    <div class="row">
-                        <span>2.60%</span>
-                        <span>Salt</span>
-                        <span id="salt2">0.00</span>
-                    </div>
-                    <div class="row">
-                        <span>21.40%</span>
-                        <span>Roasted Sesame Powder</span>
-                        <span id="sesame-powder">0.00</span>
-                    </div>
-                    <div class="row total">
-                        <span></span>
-                        <span>Total</span>
-                        <span id="batter-total">0.00</span>
-                    </div>
-                    <div class="row">
-                        <span>55%</span>
-                        <span>Water</span>
-                        <span id="water2">0.00</span>
-                    </div>
-                    <div class="row grand-total">
-                        <span></span>
-                        <span>Grand Total</span>
-                        <span id="batter-grand-total">0.00</span>
-                    </div>
-                </div>
+        
+            <div class="result-card marinade-section" id="fryBatter">
+                <h2 id="fryBatterTitle">Fry Batter</h2>
+                <h4>EST: 14%</h4>
+                <div class="ingredients"></div>
+            </div>
+        
+            <div class="result-card sauce-section" id="sauce">
+                <h2 id="sauceTitle"></h2>
+                <h4>EST: 10%</h4>
+                <div class="ingredients"></div>
             </div>
         </div>
-    </div>
-    <script src="tst.js"></script>
+        
+    <script src="r.js"></script>
 </body>
 </html>
