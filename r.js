@@ -1,6 +1,7 @@
 const recipes = {
     marinated: {
         title: "Marinated Chi-kin",
+        title2:"Fry batter",
         type: "marinade",
         marinade: {
             percentages: {
@@ -40,6 +41,7 @@ const recipes = {
     },
     chop: {
         title: "Marinated Chi-kin Chop",
+        title2: "Fry Batter for Chop",
         type: "marinade",
         marinade: {
             percentages: {
@@ -80,6 +82,7 @@ const recipes = {
     soy: {
         title: "Soy Garlic",
         type: "sauce",
+        est: "EST: 12%",
         sauce: {
             percentages: {
                 "Soy Sauce": 21.9,
@@ -91,7 +94,7 @@ const recipes = {
                 "Oyster Sauce": 6.0
             },
             ratios: {
-                "Soy Sauce": 0.0219,
+                "Soy Sauce": 0.0219 * 1.2,
                 "Mirin": 0.0199,
                 "Sugar": 0.0152,
                 "Corn Syrup": 0.0252,
@@ -104,6 +107,7 @@ const recipes = {
     spicy: {
         title: "Spicy Gochujang Sauce",
         type: "sauce",
+        est: "EST: 10%",
         sauce: {
             percentages: {
                 "Gochujang": 29.2,
@@ -206,9 +210,11 @@ function calculate() {
     // Update titles based on the selected recipe
     if (selectedRecipe.type === 'marinade') {
         document.getElementById('marinadeTitle').innerText = selectedRecipe.title;
-        document.getElementById('fryBatterTitle').innerText = selectedRecipe.title;
+        document.getElementById('fryBatterTitle').innerText = selectedRecipe.title2;
     } else if (selectedRecipe.type === 'sauce') {
         document.getElementById('sauceTitle').innerText = selectedRecipe.title;
+        document.getElementById('est11').innerText = selectedRecipe.est;
+        
     }
     
     // Show/hide appropriate sections based on recipe type
