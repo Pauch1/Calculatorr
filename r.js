@@ -37,7 +37,7 @@ const recipes = {
                 "Baking Powder": 0.00252,
                 "Salt": 0.00364,
                 "Roasted Sesame Powder": 0.02996,
-                "Water": .55
+                "Water": .2475
             }
         }
     },
@@ -79,7 +79,7 @@ const recipes = {
                 "Baking Powder": 0.00252,
                 "Salt": 0.00364,
                 "Roasted Sesame Powder": 0.02996,
-                "Water": 0.0770
+                "Water": 0.2475
             }
         }
     },
