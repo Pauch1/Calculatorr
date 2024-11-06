@@ -37,7 +37,7 @@ const recipes = {
                 "Baking Powder": 0.00252,
                 "Salt": 0.00364,
                 "Roasted Sesame Powder": 0.02996,
-                "Water": .2475
+                "Water": .1711111111111
             }
         }
     },
@@ -79,7 +79,7 @@ const recipes = {
                 "Baking Powder": 0.00252,
                 "Salt": 0.00364,
                 "Roasted Sesame Powder": 0.02996,
-                "Water": 0.2475
+                "Water": 0.171111111111
             }
         }
     },
@@ -137,9 +137,11 @@ const recipes = {
     }
 };
 
+
 function formatNumber(num) {
     return num.toFixed(2);
 }
+
 
 function calculateIngredients(weight, section) {
     const results = {};
@@ -316,3 +318,5 @@ document.getElementById('chickenWeight').addEventListener('keypress', function(e
 
 // Initial calculation with default values
 calculate();
+
+
