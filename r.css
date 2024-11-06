@@ -35,7 +35,7 @@ h1 {
 
 h2 {
     color: var(--primary-green);
-    
+    margin-bottom: 1rem;
 }
 
 .recipe-selector {
@@ -177,6 +177,15 @@ button:hover {
     color: var(--primary-green);
     margin-right: 1rem;
 }
+.ingredient-row.empty-bar {
+    height: 15px; /* Adjust the height as needed */
+    background-color: rgba(173, 216, 230, 0.3); /* Light transparent blue */
+    margin: 5px 0; /* Add some spacing above and below */
+    border-radius: 4px; /* Optional: make it rounded */
+}
+
+
+
 
 @media (max-width: 768px) {
     .container {
@@ -187,3 +196,4 @@ button:hover {
         grid-template-columns: 1fr;
     }
 }
+

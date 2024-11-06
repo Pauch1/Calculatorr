@@ -1,7 +1,7 @@
 const recipes = {
     marinated: {
         title: "Marinated Chi-kin",
-        title2:"Fry batter",
+        title2:"Fry batter Chi-kin",
         type: "marinade",
         marinade: {
             percentages: {
@@ -10,6 +10,7 @@ const recipes = {
                 "Garlic Powder": 11,
                 "Black Pepper": 7,
                 "Ginger Powder": 9,
+                "Water": 1.50
             },
             ratios: {
                 "P-MAR CHX": 0.0170,
@@ -18,7 +19,7 @@ const recipes = {
                 "Garlic Powder": 0.00187,
                 "Black Pepper": 0.00119,
                 "Ginger Powder": 0.00153,
-                "Water": 0.0150
+                "Water": 0.0150,
             }
         },
         fryBatter: {
@@ -27,15 +28,16 @@ const recipes = {
                 "Potato Starch": 46.20,
                 "Baking Powder": 1.80,
                 "Salt": 2.60,
-                "Roasted Sesame Powder": 21.40
+                "Roasted Sesame Powder": 21.40,
+                "Water": 55
             },
             ratios: {
                 "All Purpose Flour": 0.0392,
-                "Potato Starch": 0.0647,
+                "Potato Starch": 0.06468,
                 "Baking Powder": 0.00252,
                 "Salt": 0.00364,
                 "Roasted Sesame Powder": 0.02996,
-                "Water": 0.0770
+                "Water": .55
             }
         }
     },
@@ -49,7 +51,8 @@ const recipes = {
                 "Onion Powder": 12,
                 "Garlic Powder": 12,
                 "Black Pepper": 8,
-                "Ginger Powder": 10
+                "Ginger Powder": 10,
+                "Water": 1.50
             },
             ratios: {
                 "P-MAR CHX": 0.0170,
@@ -67,7 +70,8 @@ const recipes = {
                 "Potato Starch": 46.20,
                 "Baking Powder": 1.80,
                 "Salt": 2.60,
-                "Roasted Sesame Powder": 21.40
+                "Roasted Sesame Powder": 21.40,
+                "Water": 55
             },
             ratios: {
                 "All Purpose Flour": 0.0392,
@@ -88,19 +92,19 @@ const recipes = {
                 "Soy Sauce": 21.9,
                 "Mirin": 19.9,
                 "Sugar": 15.2,
-                "Corn Syrup": 25.2,
+                "Corn Syrup": 25.1,
                 "Garlic": 8.6,
                 "Vinegar": 3.3,
                 "Oyster Sauce": 6.0
             },
             ratios: {
-                "Soy Sauce": 0.0219 * 1.2,
-                "Mirin": 0.0199 * 1.2,
-                "Sugar": 0.0152 * 1.2,
-                "Corn Syrup": 0.0252 * 1.2,
-                "Garlic": 0.0086 * 1.2,
-                "Vinegar": 0.0033 * 1.2,
-                "Oyster Sauce": 0.0060 * 1.2
+                "Soy Sauce": 0.02628,
+                "Mirin": 0.02388,
+                "Sugar": 0.01824,
+                "Corn Syrup": 0.03012,
+                "Garlic": 0.01032,
+                "Vinegar": 0.00396,
+                "Oyster Sauce": 0.0072
             }
         }
     },
@@ -110,22 +114,22 @@ const recipes = {
         est: "EST: 10%",
         sauce: {
             percentages: {
-                "Gochujang": 29.2,
+                "Gochujang": 28.9,
                 "Ketchup": 16.5,
-                "Soy Sauce": 9.4,
-                "Brown Rice Vinegar": 20.2,
-                "Mirin": 11.0,
-                "Light Brown Sugar": 8.2,
+                "Soy Sauce": 9.3,
+                "Brown Rice Vinegar": 20.8,
+                "Mirin": 10.9,
+                "Light Brown Sugar": 8.1,
                 "Garlic": 5.5,
                 "Sesame seed for garnish": 0
             },
             ratios: {
-                "Gochujang": 0.0292,
+                "Gochujang": 0.0289,
                 "Ketchup": 0.0165,
-                "Soy Sauce": 0.0094,
-                "Brown Rice Vinegar": 0.0202,
-                "Mirin": 0.0110,
-                "Light Brown Sugar": 0.0082,
+                "Soy Sauce": 0.0093,
+                "Brown Rice Vinegar": 0.0208,
+                "Mirin": 0.0109,
+                "Light Brown Sugar": 0.0081,
                 "Garlic": 0.0055,
                 "Sesame seed for garnish": 0
             }
@@ -142,41 +146,91 @@ function calculateIngredients(weight, section) {
     let total = 0;
     
     for (const [ingredient, ratio] of Object.entries(section.ratios)) {
+        // Skip adding water to the main results
+        if (ingredient === 'Water') continue;
+        
         const amount = weight * ratio;
         results[ingredient] = {
             amount,
             percentage: section.percentages?.[ingredient] || null
         };
+        
         total += amount;
     }
     
+    // Store total excluding water
     results['Total'] = {
         amount: total,
         percentage: 100
     };
+    
+    // Add water separately at the end
+    const waterAmount = section.ratios['Water'] ? weight * section.ratios['Water'] : 0;
+    if (waterAmount > 0) {
+        results['Water'] = {
+            amount: waterAmount,
+            percentage: section.percentages?.['Water'] || null
+        };
+    }
+    
     return results;
 }
+
 
 function displayResults(results, containerId, showPercentages) {
     const container = document.querySelector(`#${containerId} .ingredients`);
     container.innerHTML = '';
     
+    let totalAdded = false; // Flag to track if the total is added
+    
     Object.entries(results).forEach(([ingredient, data]) => {
-        if (ingredient === 'P-MAR CHX') return; // Skip P-MAR CHX
-
+        // Skip P-MAR CHX if present
+        if (ingredient === 'P-MAR CHX') return; 
+        
+        // Skip Water from appearing before the total
+        if (ingredient === 'Water') return; 
+        
         const row = document.createElement('div');
         row.className = 'ingredient-row';
+
+        // Apply bold style for "Total"
+        let content = `<span${ingredient === 'Total' ? ' style="font-weight:bold;"' : ''}>${ingredient}</span><span>`;
         
-        let content = `<span>${ingredient}</span><span>`;
         if (showPercentages && data.percentage !== null) {
             content += `<span class="percentage">${data.percentage}%</span>`;
         }
+        
         content += `${formatNumber(data.amount)}g</span>`;
         
         row.innerHTML = content;
         container.appendChild(row);
+        
+        // After adding the total, add an empty bar
+        if (ingredient === 'Total' && !totalAdded) {
+            const emptyBar = document.createElement('div');
+            emptyBar.className = 'ingredient-row empty-bar'; // Add a class for the empty bar
+            container.appendChild(emptyBar);
+            totalAdded = true;
+        }
     });
+    
+    // Now add the water at the very end, after the empty bar and total
+    if (results['Water']) {
+        const waterRow = document.createElement('div');
+        waterRow.className = 'ingredient-row';
+        
+        let waterContent = `<span>Water</span><span>`;
+        if (showPercentages && results['Water'].percentage !== null) {
+            waterContent += `<span class="percentage">${results['Water'].percentage}%</span>`;
+        }
+        waterContent += `${formatNumber(results['Water'].amount)}g</span>`;
+        
+        waterRow.innerHTML = waterContent;
+        container.appendChild(waterRow);
+    }
 }
+
+
 
 
 function showSection(sectionClass, show) {
@@ -190,16 +244,25 @@ function showSection(sectionClass, show) {
     });
 }
 
+
+function togglePercentageOnly(show) {
+    const percentageElements = document.querySelectorAll('.percentage-only');
+    percentageElements.forEach(element => {
+        element.style.display = show ? 'block' : 'none';
+    });
+}
+
 function calculate() {
     const weight = parseFloat(document.getElementById('chickenWeight').value);
     const recipe = document.getElementById('recipeSelect').value;
     const showPercentages = document.getElementById('showPercentages').checked;
     
-    // If no weight entered, use placeholder value of 1000g
+    // Toggle "P-MAR CHX" and "EST" visibility based on Show Percentages checkbox
+    togglePercentageOnly(showPercentages);
+
     const calculationWeight = weight || 0;
     
     if (!recipe) {
-        // Hide all sections if no recipe selected
         showSection('marinade-section', false);
         showSection('sauce-section', false);
         return;
@@ -214,7 +277,6 @@ function calculate() {
     } else if (selectedRecipe.type === 'sauce') {
         document.getElementById('sauceTitle').innerText = selectedRecipe.title;
         document.getElementById('est11').innerText = selectedRecipe.est;
-        
     }
     
     // Show/hide appropriate sections based on recipe type
@@ -238,7 +300,6 @@ function calculate() {
         displayResults(sauceResults, 'sauce', showPercentages);
     }
 }
-
 
 // Event Listeners
 document.getElementById('calculateBtn').addEventListener('click', calculate);
